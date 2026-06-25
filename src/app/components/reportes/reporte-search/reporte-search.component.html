@@ -1,0 +1,27 @@
+<div class="search-card">
+  <h3>Generar Estado de Cuenta</h3>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label>ID del Cliente *</label>
+      <input formControlName="clienteId" type="number" placeholder="Ej: 1" />
+      <span class="error-msg" *ngIf="isInvalid('clienteId')">ID de cliente requerido.</span>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Fecha Desde *</label>
+        <input formControlName="desde" type="date" />
+        <span class="error-msg" *ngIf="isInvalid('desde')">Fecha inicial requerida.</span>
+      </div>
+      <div class="form-group">
+        <label>Fecha Hasta *</label>
+        <input formControlName="hasta" type="date" />
+        <span class="error-msg" *ngIf="isInvalid('hasta')">Fecha final requerida.</span>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-primary">Generar Reporte</button>
+
+  </form>
+</div>

@@ -1,0 +1,89 @@
+<div class="reporte-page">
+
+  <app-reporte-search
+    *ngIf="!reporte && !isLoading"
+    (search)="onSearch($event)">
+  </app-reporte-search>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Generando reporte...</p>
+  </div>
+
+  <div *ngIf="errorMessage && !isLoading" class="alert error">
+    {{ errorMessage }}
+    <button class="btn-link" (click)="volver()">← Volver a buscar</button>
+  </div>
+
+  <div *ngIf="reporte" class="results">
+
+    <div class="results-header">
+      <div>
+        <h2>Estado de Cuenta</h2>
+        <p class="cliente-info">
+          <strong>Cliente:</strong> {{ reporte.clienteNombre }} &nbsp;|&nbsp;
+          <strong>Período:</strong> {{ reporte.desde }} — {{ reporte.hasta }}
+        </p>
+      </div>
+      <div class="result-actions">
+        <button class="btn-pdf" (click)="descargarPdf()">⬇ Descargar PDF</button>
+        <button class="btn-secondary" (click)="volver()">← Nueva Búsqueda</button>
+      </div>
+    </div>
+
+    <div *ngIf="reporte.cuentas.length === 0" class="empty">
+      No se encontraron cuentas para este cliente en el período indicado.
+    </div>
+
+    <div *ngFor="let cuenta of reporte.cuentas" class="cuenta-card">
+      <div class="cuenta-header">
+        <div>
+          <h3>{{ cuenta.numeroCuenta }} <span class="tipo">{{ cuenta.tipoCuenta }}</span></h3>
+        </div>
+        <div class="cuenta-stats">
+          <div class="stat">
+            <span class="stat-label">Saldo Disponible</span>
+            <span class="stat-value">{{ cuenta.saldoDisponible | number:'1.2-2' }}</span>
+          </div>
+          <div class="stat credito">
+            <span class="stat-label">Total Créditos</span>
+            <span class="stat-value">+{{ cuenta.totalCreditos | number:'1.2-2' }}</span>
+          </div>
+          <div class="stat debito">
+            <span class="stat-label">Total Débitos</span>
+            <span class="stat-value">{{ cuenta.totalDebitos | number:'1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Saldo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mov of cuenta.movimientos">
+            <td>{{ mov.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>
+              <span [class]="mov.tipoMovimiento === 'CREDITO' ? 'badge credito' : 'badge debito'">
+                {{ mov.tipoMovimiento }}
+              </span>
+            </td>
+            <td [class]="mov.valor >= 0 ? 'positive' : 'negative'">
+              {{ mov.valor | number:'1.2-2' }}
+            </td>
+            <td>{{ mov.saldo | number:'1.2-2' }}</td>
+          </tr>
+          <tr *ngIf="cuenta.movimientos.length === 0">
+            <td colspan="4" class="empty-row">Sin movimientos en este período.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

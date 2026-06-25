@@ -1,0 +1,45 @@
+<div class="page-header">
+  <h2>Cuentas</h2>
+  <button class="btn-primary" (click)="crear()">+ Nueva Cuenta</button>
+</div>
+
+<div class="search-bar">
+  <input [(ngModel)]="filterText" placeholder="Buscar cuenta..." />
+</div>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Nro. Cuenta</th>
+        <th>Tipo</th>
+        <th>Saldo Inicial</th>
+        <th>Saldo Disponible</th>
+        <th>Cliente</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of filtered">
+        <td>{{ c.numeroCuenta }}</td>
+        <td>{{ c.tipoCuenta }}</td>
+        <td>{{ c.saldoInicial | number:'1.2-2' }}</td>
+        <td>{{ c.saldoInicial | number:'1.2-2' }}</td>
+        <td>{{ c.clienteNombre }}</td>
+        <td>
+          <span [class]="c.estado ? 'badge active' : 'badge inactive'">
+            {{ c.estado ? 'Activa' : 'Inactiva' }}
+          </span>
+        </td>
+        <td class="actions">
+          <button class="btn-edit" (click)="editar(c.id)">Editar</button>
+          <button class="btn-delete" (click)="eliminar(c.id)">Eliminar</button>
+        </td>
+      </tr>
+      <tr *ngIf="filtered.length === 0">
+        <td colspan="7" class="empty">No hay cuentas registradas.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

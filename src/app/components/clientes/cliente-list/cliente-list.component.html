@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h2>Clientes</h2>
+  <button class="btn-primary" (click)="crear()">+ Nuevo Cliente</button>
+</div>
+
+<div class="search-bar">
+  <input [(ngModel)]="filterText" placeholder="Buscar cliente..." />
+</div>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Identificación</th>
+        <th>Teléfono</th>
+        <th>Dirección</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of filtered">
+        <td>{{ c.nombre }}</td>
+        <td>{{ c.identificacion }}</td>
+        <td>{{ c.telefono }}</td>
+        <td>{{ c.direccion }}</td>
+        <td>
+          <span [class]="c.estado ? 'badge active' : 'badge inactive'">
+            {{ c.estado ? 'Activo' : 'Inactivo' }}
+          </span>
+        </td>
+        <td class="actions">
+          <button class="btn-edit" (click)="editar(c.id)">Editar</button>
+          <button class="btn-delete" (click)="eliminar(c.id)">Eliminar</button>
+        </td>
+      </tr>
+      <tr *ngIf="filtered.length === 0">
+        <td colspan="6" class="empty">No hay clientes registrados.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

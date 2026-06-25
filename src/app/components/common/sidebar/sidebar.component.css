@@ -1,0 +1,40 @@
+.sidebar {
+  width: 220px;
+  min-height: 100%;
+  background: #16213e;
+  padding: 24px 0;
+  flex-shrink: 0;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  color: #a0aec0;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+nav ul li a:hover {
+  background: rgba(255, 218, 0, 0.08);
+  color: #fff;
+}
+
+nav ul li a.active {
+  background: rgba(255, 218, 0, 0.15);
+  color: #ffda00;
+  border-left: 3px solid #ffda00;
+}
+
+.icon {
+  font-size: 1.1rem;
+}
