@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClienteService } from '../../../services/cliente.service';
+import { ClienteRequest } from '../../../models/cliente.model';
+import { ErrorResponse } from '../../../models/error-response.model';
 
 @Component({
   selector: 'app-cliente-form',
@@ -67,7 +69,17 @@ export class ClienteFormComponent implements OnInit {
     this.isSubmitting = true;
     this.errorMessage = '';
 
-    const payload = this.form.value;
+    const payload: ClienteRequest = {
+      nombre:         this.form.value.nombre,
+      genero:         this.form.value.genero,
+      edad:           +this.form.value.edad,
+      identificacion: this.form.value.identificacion,
+      direccion:      this.form.value.direccion,
+      telefono:       this.form.value.telefono,
+      clienteid:      this.form.value.clienteid,
+      contrasena:     this.form.value.contrasena,
+      estado:         this.form.value.estado
+    };
 
     const request$ = this.isEditing && this.clienteId !== null
       ? this.clienteService.update(this.clienteId, payload)
@@ -75,8 +87,8 @@ export class ClienteFormComponent implements OnInit {
 
     request$.subscribe({
       next: () => this.router.navigate(['/clientes']),
-      error: err => {
-        this.errorMessage = err?.error?.error || 'Error al guardar el cliente.';
+      error: (err: { error: ErrorResponse }) => {
+        this.errorMessage = (err.error.error as string) || 'Error al guardar el cliente.';
         this.isSubmitting = false;
       }
     });

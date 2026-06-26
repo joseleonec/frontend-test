@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MovimientoService } from '../../../services/movimiento.service';
+import { MovimientoRequest } from '../../../models/movimiento.model';
+import { ErrorResponse } from '../../../models/error-response.model';
 
 @Component({
   selector: 'app-movimiento-form',
@@ -40,7 +42,7 @@ export class MovimientoFormComponent {
     this.errorMessage = '';
     this.successMessage = '';
 
-    const payload = {
+    const payload: MovimientoRequest = {
       numeroCuenta:   this.form.value.numeroCuenta,
       tipoMovimiento: this.form.value.tipoMovimiento,
       valor:          +this.form.value.valor
@@ -52,8 +54,8 @@ export class MovimientoFormComponent {
         this.isSubmitting = false;
         this.form.reset({ tipoMovimiento: 'CREDITO', valor: null, numeroCuenta: '' });
       },
-      error: err => {
-        this.errorMessage = err?.error?.error || err?.error?.message || 'Error al registrar el movimiento.';
+      error: (err: { error: ErrorResponse }) => {
+        this.errorMessage = (err.error.error as string) || 'Error al registrar el movimiento.';
         this.isSubmitting = false;
       }
     });

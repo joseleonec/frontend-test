@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CuentaService } from '../../../services/cuenta.service';
+import { CuentaRequest } from '../../../models/cuenta.model';
+import { ErrorResponse } from '../../../models/error-response.model';
 
 @Component({
   selector: 'app-cuenta-form',
@@ -52,7 +54,13 @@ export class CuentaFormComponent implements OnInit {
     this.isSubmitting = true;
     this.errorMessage = '';
 
-    const payload = { ...this.form.value, clienteId: +this.form.value.clienteId };
+    const payload: CuentaRequest = {
+      numeroCuenta: this.form.value.numeroCuenta,
+      tipoCuenta:   this.form.value.tipoCuenta,
+      saldoInicial: +this.form.value.saldoInicial,
+      estado:       this.form.value.estado,
+      clienteId:    +this.form.value.clienteId
+    };
 
     const req$ = this.isEditing && this.cuentaId !== null
       ? this.cuentaService.update(this.cuentaId, payload)
@@ -60,8 +68,8 @@ export class CuentaFormComponent implements OnInit {
 
     req$.subscribe({
       next: () => this.router.navigate(['/cuentas']),
-      error: err => {
-        this.errorMessage = err?.error?.error || 'Error al guardar la cuenta.';
+      error: (err: { error: ErrorResponse }) => {
+        this.errorMessage = (err.error.error as string) || 'Error al guardar la cuenta.';
         this.isSubmitting = false;
       }
     });

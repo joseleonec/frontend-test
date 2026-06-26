@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReporteDto } from '../../../models/reporte.model';
 import { ReporteService } from '../../../services/reporte.service';
 import { ReporteSearchComponent, ReporteSearchCriteria } from '../reporte-search/reporte-search.component';
+import { ErrorResponse } from '../../../models/error-response.model';
 
 @Component({
   selector: 'app-reporte-view',
@@ -27,8 +28,8 @@ export class ReporteViewComponent {
 
     this.reporteService.getReporte(criteria.clienteId, criteria.desde, criteria.hasta).subscribe({
       next: data => { this.reporte = data; this.isLoading = false; },
-      error: err  => {
-        this.errorMessage = err?.error?.error || 'No se pudo generar el reporte.';
+      error: (err: { error: ErrorResponse }) => {
+        this.errorMessage = (err.error.error as string) || 'No se pudo generar el reporte.';
         this.isLoading = false;
       }
     });
