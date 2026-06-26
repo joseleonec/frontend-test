@@ -10,17 +10,19 @@ export class ReporteService {
 
   constructor(private http: HttpClient) {}
 
-  getReporte(clienteId: number, desde: string, hasta: string): Observable<ReporteDto> {
+  getReporte(clienteid: string, desde: string, hasta: string): Observable<ReporteDto> {
     const params = new HttpParams()
-      .set('fecha', `${desde},${hasta}`)
-      .set('cliente', clienteId.toString());
+      .set('clienteid', clienteid)
+      .set('fechaDesde', desde)
+      .set('fechaHasta', hasta);
     return this.http.get<ReporteDto>(this.url, { params });
   }
 
-  getReportePdf(clienteId: number, desde: string, hasta: string): Observable<Blob> {
+  getReportePdf(clienteid: string, desde: string, hasta: string): Observable<Blob> {
     const params = new HttpParams()
-      .set('fecha', `${desde},${hasta}`)
-      .set('cliente', clienteId.toString());
+      .set('clienteid', clienteid)
+      .set('fechaDesde', desde)
+      .set('fechaHasta', hasta);
     return this.http.get(this.url, {
       params,
       headers: { Accept: 'application/pdf' },

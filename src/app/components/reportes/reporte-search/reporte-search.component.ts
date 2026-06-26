@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 export interface ReporteSearchCriteria {
-  clienteId: number;
+  clienteid: string;
   desde: string;
   hasta: string;
 }
@@ -22,7 +22,7 @@ export class ReporteSearchComponent {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      clienteId: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      clienteid: ['', Validators.required],
       desde:     ['', Validators.required],
       hasta:     ['', Validators.required]
     });
@@ -35,6 +35,6 @@ export class ReporteSearchComponent {
 
   onSubmit(): void {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
-    this.search.emit({ ...this.form.value, clienteId: +this.form.value.clienteId });
+    this.search.emit(this.form.value);
   }
 }

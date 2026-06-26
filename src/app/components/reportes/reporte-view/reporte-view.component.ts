@@ -26,7 +26,7 @@ export class ReporteViewComponent {
     this.reporte = null;
     this.criteria = criteria;
 
-    this.reporteService.getReporte(criteria.clienteId, criteria.desde, criteria.hasta).subscribe({
+    this.reporteService.getReporte(criteria.clienteid, criteria.desde, criteria.hasta).subscribe({
       next: data => { this.reporte = data; this.isLoading = false; },
       error: (err: { error: ErrorResponse }) => {
         this.errorMessage = (err.error.error as string) || 'No se pudo generar el reporte.';
@@ -38,12 +38,12 @@ export class ReporteViewComponent {
   descargarPdf(): void {
     if (!this.criteria) return;
     this.reporteService.getReportePdf(
-      this.criteria.clienteId, this.criteria.desde, this.criteria.hasta
+      this.criteria.clienteid, this.criteria.desde, this.criteria.hasta
     ).subscribe(blob => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `reporte-cliente-${this.criteria!.clienteId}.pdf`;
+      a.download = `reporte-cliente-${this.criteria!.clienteid}.pdf`;
       a.click();
       URL.revokeObjectURL(url);
     });
