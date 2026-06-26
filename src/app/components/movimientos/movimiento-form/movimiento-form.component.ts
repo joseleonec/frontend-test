@@ -23,7 +23,7 @@ export class MovimientoFormComponent {
     private router: Router
   ) {
     this.form = this.fb.group({
-      cuentaId:       ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      numeroCuenta:   ['', Validators.required],
       tipoMovimiento: ['CREDITO', Validators.required],
       valor:          [null, [Validators.required, Validators.min(0.01)]]
     });
@@ -41,16 +41,16 @@ export class MovimientoFormComponent {
     this.successMessage = '';
 
     const payload = {
-      ...this.form.value,
-      cuentaId: +this.form.value.cuentaId,
-      valor: +this.form.value.valor
+      numeroCuenta:   this.form.value.numeroCuenta,
+      tipoMovimiento: this.form.value.tipoMovimiento,
+      valor:          +this.form.value.valor
     };
 
     this.movimientoService.create(payload).subscribe({
       next: res => {
         this.successMessage = `Movimiento registrado exitosamente. Nuevo saldo: ${res.saldo}`;
         this.isSubmitting = false;
-        this.form.reset({ tipoMovimiento: 'CREDITO', valor: null, cuentaId: '' });
+        this.form.reset({ tipoMovimiento: 'CREDITO', valor: null, numeroCuenta: '' });
       },
       error: err => {
         this.errorMessage = err?.error?.error || err?.error?.message || 'Error al registrar el movimiento.';

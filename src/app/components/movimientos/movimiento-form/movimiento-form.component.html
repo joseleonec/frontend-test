@@ -15,9 +15,9 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-card">
 
     <div class="form-group">
-      <label>ID de Cuenta *</label>
-      <input formControlName="cuentaId" type="number" placeholder="Ej: 1" />
-      <span class="error-msg" *ngIf="isInvalid('cuentaId')">ID de cuenta numérico es requerido.</span>
+      <label>Número de Cuenta *</label>
+      <input formControlName="numeroCuenta" type="text" placeholder="Ej: 478758" />
+      <span class="error-msg" *ngIf="isInvalid('numeroCuenta')">Número de cuenta es requerido.</span>
     </div>
 
     <div class="form-group">

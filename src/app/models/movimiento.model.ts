@@ -1,5 +1,5 @@
 export interface MovimientoRequest {
-  cuentaId: number;
+  numeroCuenta: string;
   tipoMovimiento: 'CREDITO' | 'DEBITO';
   valor: number;
 }
