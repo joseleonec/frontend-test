@@ -3,6 +3,7 @@ export interface MovimientoReporteDto {
   fecha: string;
   tipoMovimiento: string;
   valor: number;
+  saldoInicial: number;
   saldo: number;
   cuentaId: number;
   numeroCuenta: string;
