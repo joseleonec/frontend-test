@@ -61,7 +61,7 @@ export class CuentaFormComponent implements OnInit {
     req$.subscribe({
       next: () => this.router.navigate(['/cuentas']),
       error: err => {
-        this.errorMessage = err?.error?.message || 'Error al guardar la cuenta.';
+        this.errorMessage = err?.error?.error || 'Error al guardar la cuenta.';
         this.isSubmitting = false;
       }
     });

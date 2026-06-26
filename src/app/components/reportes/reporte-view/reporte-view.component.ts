@@ -28,7 +28,7 @@ export class ReporteViewComponent {
     this.reporteService.getReporte(criteria.clienteId, criteria.desde, criteria.hasta).subscribe({
       next: data => { this.reporte = data; this.isLoading = false; },
       error: err  => {
-        this.errorMessage = err?.error?.message || 'No se pudo generar el reporte.';
+        this.errorMessage = err?.error?.error || 'No se pudo generar el reporte.';
         this.isLoading = false;
       }
     });

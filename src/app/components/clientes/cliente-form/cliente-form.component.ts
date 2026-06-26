@@ -76,7 +76,7 @@ export class ClienteFormComponent implements OnInit {
     request$.subscribe({
       next: () => this.router.navigate(['/clientes']),
       error: err => {
-        this.errorMessage = err?.error?.message || 'Error al guardar el cliente.';
+        this.errorMessage = err?.error?.error || 'Error al guardar el cliente.';
         this.isSubmitting = false;
       }
     });
