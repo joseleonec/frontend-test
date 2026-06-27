@@ -31,7 +31,7 @@ export class CuentaFormComponent implements OnInit {
       tipoCuenta:   ['Ahorros', Validators.required],
       saldoInicial: [0, [Validators.required, Validators.min(0)]],
       estado:       [true],
-      clienteId:    ['', [Validators.required, Validators.pattern('^[0-9]+$')]]
+      clienteid:    ['', Validators.required]
     });
   }
 
@@ -59,7 +59,7 @@ export class CuentaFormComponent implements OnInit {
       tipoCuenta:   this.form.value.tipoCuenta,
       saldoInicial: +this.form.value.saldoInicial,
       estado:       this.form.value.estado,
-      clienteId:    +this.form.value.clienteId
+      clienteid:    this.form.value.clienteid
     };
 
     const req$ = this.isEditing && this.cuentaId !== null

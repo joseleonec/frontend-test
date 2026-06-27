@@ -3,7 +3,7 @@ export interface CuentaRequest {
   tipoCuenta: string;
   saldoInicial: number;
   estado: boolean;
-  clienteId: number;
+  clienteid: string;
 }
 
 export interface CuentaResponse {
